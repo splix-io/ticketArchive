@@ -36,13 +36,15 @@
         const fileList = document.getElementById("fileList");
 
         // Fetch the list of files in the current directory
-        fetch('.').then(response => response.text()).then(data => {
+        fetch('./').then(response => response.text()).then(data => {
             const parser = new DOMParser();
             const htmlDocument = parser.parseFromString(data, 'text/html');
 
             // Extract and populate the list with links to the HTML files
-            const links = htmlDocument.querySelectorAll('a[href$=".html"]');
-            links.forEach(link => {
+            const links = Array.from(htmlDocument.querySelectorAll('a'));
+            const htmlFiles = links.filter(link => link.href.endsWith('.html'));
+
+            htmlFiles.forEach(link => {
                 const fileName = link.getAttribute('href');
                 const listItem = document.createElement("li");
                 const linkElement = document.createElement("a");
