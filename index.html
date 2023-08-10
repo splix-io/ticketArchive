@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Archive Index</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ticket Archive Index</h1>
+    <ul id="fileList">
+        <!-- JavaScript will dynamically populate this list -->
+    </ul>
+
+    <script>
+        const fileList = document.getElementById("fileList");
+
+        // Fetch the list of files in the current directory
+        fetch('.').then(response => response.text()).then(data => {
+            const parser = new DOMParser();
+            const htmlDocument = parser.parseFromString(data, 'text/html');
+
+            // Extract and populate the list with links to the HTML files
+            const links = htmlDocument.querySelectorAll('a[href$=".html"]');
+            links.forEach(link => {
+                const fileName = link.getAttribute('href');
+                const listItem = document.createElement("li");
+                const linkElement = document.createElement("a");
+                linkElement.href = fileName;
+                linkElement.textContent = fileName;
+                listItem.appendChild(linkElement);
+                fileList.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>
