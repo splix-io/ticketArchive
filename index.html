@@ -7,30 +7,56 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
             padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             color: #333;
-            text-align: center;
+            margin-bottom: 20px;
         }
         ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
         li {
             margin-bottom: 10px;
         }
-        a {
+        .discord-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #7289DA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
             text-decoration: none;
-            color: #007bff;
+        }
+        .discord-button:hover {
+            background-color: #5B6E91;
         }
     </style>
 </head>
 <body>
-    <h1>Ticket Archive Index</h1>
-    <ul id="fileList">
-        <!-- JavaScript will dynamically populate this list -->
-    </ul>
+    <div class="container">
+        <h1>Ticket Archive Index</h1>
+        <ul id="fileList">
+            <!-- JavaScript will dynamically populate this list -->
+        </ul>
+        <a class="discord-button" href="https://discord.com/">Join Our Discord Server</a>
+    </div>
 
     <script>
         const fileList = document.getElementById("fileList");
