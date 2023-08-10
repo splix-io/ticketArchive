@@ -34,26 +34,31 @@
 
     <script>
         const fileList = document.getElementById("fileList");
+        const username = 'splix-io';
+        const repository = 'ticketArchive';
 
-        // Fetch the list of files in the current directory
-        fetch('./').then(response => response.text()).then(data => {
-            const parser = new DOMParser();
-            const htmlDocument = parser.parseFromString(data, 'text/html');
+        // Fetch the contents of the repository
+        fetch(`https://api.github.com/repos/${username}/${repository}/contents/`)
+            .then(response => response.json())
+            .then(data => {
+                // Extract HTML file names
+                const htmlFiles = data
+                    .filter(item => item.type === 'file' && item.name.endsWith('.html'))
+                    .map(item => item.name);
 
-            // Extract and populate the list with links to the HTML files
-            const links = Array.from(htmlDocument.querySelectorAll('a'));
-            const htmlFiles = links.filter(link => link.href.endsWith('.html'));
-
-            htmlFiles.forEach(link => {
-                const fileName = link.getAttribute('href');
-                const listItem = document.createElement("li");
-                const linkElement = document.createElement("a");
-                linkElement.href = fileName;
-                linkElement.textContent = fileName;
-                listItem.appendChild(linkElement);
-                fileList.appendChild(listItem);
+                // Populate the list with links to the HTML files
+                htmlFiles.forEach(fileName => {
+                    const listItem = document.createElement("li");
+                    const linkElement = document.createElement("a");
+                    linkElement.href = fileName;
+                    linkElement.textContent = fileName;
+                    listItem.appendChild(linkElement);
+                    fileList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching repository contents:', error);
             });
-        });
     </script>
 </body>
 </html>
